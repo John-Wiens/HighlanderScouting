@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<p>Select A team From the List</p>>
+<style>
+    .north {
+        transform: rotate(0deg);
+        -ms-transform: rotate(0deg); /* IE 9 */
+        -webkit-transform: rotate(0deg); /* Safari and Chrome */
+    }
+
+    .west {
+        transform: rotate(90deg);
+        -ms-transform: rotate(90deg); /* IE 9 */
+        -webkit-transform: rotate(90deg); /* Safari and Chrome */
+    }
+
+    .south {
+        transform: rotate(180deg);
+        -ms-transform: rotate(180deg); /* IE 9 */
+        -webkit-transform: rotate(180deg); /* Safari and Chrome */
+    }
+
+    .east {
+        transform: rotate(270deg);
+        -ms-transform: rotate(270deg); /* IE 9 */
+        -webkit-transform: rotate(270deg); /* Safari and Chrome */
+    }
+
+</style>
+<body>
+
+    <form action="http://localhost:5800/teams" method="POST">
+        >
+        <select id="team_select" name="team" onchange="this.form.submit()">
+            {% for o in team_list %}
+            <option value="{{ o }}" SELECTED>{{ o }}</option>
+            {% endfor %}
+            <option selected="selected">{{ selected_team }}</option>
+        </select>
+    </form>
+
+    <h2> Currently Selected Team: {{ selected_team }}</h2>
+    <img class ="north" id="robotPic" src="/static/pictures/teampictures/{{selected_team}}.jpg" alt="No Picture Available" style="width:800px;height:600px;">
+    <input type = "button" value="Rotate Image" onclick="rotateImage()" />
+    <h4> OPR: {{ opr }}</h4>
+    <h4> Hab: {{hab}}</h4>
+    <h4> Hatches: {{hatches}}</h4>
+    <h4> Cargo: {{cargo }}</h4>
+    <h4> Climb: {{climb}}</h4>
+    <h4> Power Rating: {{pr}}</h4>
+
+</body>
+S
+
+<script>
+    function switchTeam() {
+        var team = document.getElementById("team_select").value;
+
+    }
+
+    function rotateImage() {
+        var img = document.getElementById('robotPic');
+        if (img.classList.contains('north')) {
+            img.classList.add('west')
+            img.classList.remove('north')
+        } else if (img.classList.contains('west')) {
+            img.classList.add('south')
+            img.classList.remove('west')
+        } else if (img.classList.contains('south')) {
+            img.classList.add('east')
+            img.classList.remove('south')
+        } else if (img.classList.contains('east')) {
+            img.classList.add('north')
+            img.classList.remove('east')
+        }
+    }
+
+</script>
+
+{% endblock %}
+
+
