@@ -27,6 +27,10 @@ def make_tba_request(key_string, last_modified):
     r = requests.get(api_url+key_string, headers=header)  
     return r
 
+def check_tba_new_data(request, last_modified):
+    r = make_tba_request(request,last_modified)
+    return not(r.status_code == 304)
+
 def check_tba_connection():
     try:
         make_tba_request(api_url,"")

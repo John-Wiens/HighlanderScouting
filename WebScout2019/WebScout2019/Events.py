@@ -51,20 +51,26 @@ class Event_2019():
         pickle_out.close()
 
     def update(self):
-        print("Updating: {}".format(self.code))
-        self.event, _ = TBA.update_entry("/event/" + self.code, self.event, self.last_update_time)
-        self.teams, _ = TBA.update_entry("/event/" + self.code + "/teams",self.teams,self.last_update_time)
-        self.rankings, _ = TBA.update_entry("/event/" + self.code + "/rankings",self.rankings,self.last_update_time)
-        self.matches, self.last_update_time = TBA.update_entry("/event/" + self.code + "/matches",self.matches,self.last_update_time)
-        self.update_team_stats()
-        #print(self.matches[0])
-        self.predictions = Processing.predict_matches(self)
-        self.predictions_rp = self.predict_match_rp()
-        print("RP Predictions")
-        print(self.predictions_rp)
-        self.predictions_final = self.predict_final_rankings()
-        print("Final Predictions")
-        print(self.predictions_final)
+        if TBA.check_tba_connection():
+            if(TBA.check_tba_new_data("/event/" + self.code,self.last_update_time)):
+                print("Updating: {}".format(self.code))
+                self.event, _ = TBA.update_entry("/event/" + self.code, self.event, self.last_update_time)
+                self.teams, _ = TBA.update_entry("/event/" + self.code + "/teams",self.teams,self.last_update_time)
+                self.rankings, _ = TBA.update_entry("/event/" + self.code + "/rankings",self.rankings,self.last_update_time)
+                self.matches, self.last_update_time = TBA.update_entry("/event/" + self.code + "/matches",self.matches,self.last_update_time)
+                self.update_team_stats()
+                #print(self.matches[0])
+                self.predictions = Processing.predict_matches(self)
+                self.predictions_rp = self.predict_match_rp()
+                print("RP Predictions")
+                print(self.predictions_rp)
+                self.predictions_final = self.predict_final_rankings()
+                print("Final Predictions")
+                print(self.predictions_final)
+            else:
+                print("{} is already Up to Date".format(self.code))
+        else:
+            print("Unable to Connect to TBA")
 
     def predict_final_rankings(self):
         #Team Num, Expected RP, Expected Cargo, Expected Hatch, Expected Climb
@@ -346,9 +352,6 @@ class Event_2019():
                     team_index = team_list.index(int(team[3:]))
                     robot_stats[team_index].append( match["score_breakdown"]["blue"][stat+str(robot_number)]) 
                     robot_number +=1
-
-
-
         return robot_stats
     
     
