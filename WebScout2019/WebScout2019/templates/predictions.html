@@ -6,8 +6,11 @@
         border-spacing: 0;
         width: 100%;
         border: 1px solid #ddd;
+        counter-reset: rowNumber;
     }
-
+    table .table_number {
+        counter-increment: rowNumber;
+    }
     th {
         cursor: pointer;
     }
@@ -16,27 +19,62 @@
         text-align: left;
         padding: 16px;
     }
-
+    table tr td:first-child::before {
+        content: counter(rowNumber);
+        min-width: 1em;
+        margin-right: 0.5em;
+    }
     tr:nth-child(even) {
         background-color: #f2f2f2
     }
 </style>
 </head>
 <body>
-
+    <br>
     <p><strong></strong></p>
-
+    <h2> Predicted Match Outcomes </h2>
     <table id="myTable">
         <tr>
             <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->
-            <th onclick="sortTable(0)">Qualification Number</th>
-            <th onclick="sortTable(1)">Red Score</th>
-            <th onclick="sortTable(2)">Red Probability</th>
-            <th onclick="sortTable(3)">Blue Score</th>
-            <th onclick="sortTable(4)">Blue Probability</th>
+            <th>Qualification Number</th>
+            <th>Red Score</th>
+            <th>Red Probability</th>
+            <th>Climb RP</th>
+            <th>Rocket RP</th>
+            <th>Blue Score</th>
+            <th>Blue Probability</th>
+            <th>Climb RP</th>
+            <th>Rocket RP</th>
         </tr>
         {% for row in predictions %}
-        <tr>
+        <tr class="table_number">
+
+            {% for column in row %}
+            <td>{{ column}}</td>
+
+            {% endfor %}
+
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h2> Predicted Outcome of Qualifications </h2>
+    <table id="finalPredictions">
+        <tr >
+
+            <th onclick="sortTable(0)">Team Number </th>
+            <th onclick="sortTable(1)">Ranking Points</th>
+            <th onclick="sortTable(2)">Cargo Points</th>
+            <th onclick="sortTable(3)">Hatch Points</th>
+            <th onclick="sortTable(4)">Climb Points</th>
+
+            <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->
+        </tr>
+        {% for row in final_predictions %}
+        <tr class="table_number">
 
             {% for column in row %}
             <td>{{ column}}</td>
@@ -47,10 +85,91 @@
         {% endfor %}
     </table>
 
+
     <script>
         window.onload = function () {
-            sortTable(0)
+            sortTable(0);
+            sortRankings(1);
+            convert_match_numbers();
         };
+        function convert_match_numbers() {
+            var table = document.getElementById("myTable");
+            rows = table.rows;
+            for (i = 1; i < (rows.length); i++) {
+                firstCell = rows[i].getElementsByTagName("TD")[0];
+                matchNum = parseFloat(firstCell.innerHTML);
+                var outString = "";
+                if (matchNum < 1000) {
+                    outString = "QM - " + (matchNum - 100);
+                }
+                else if (matchNum < 2000) {
+                    outString = "QF - " + Math.trunc(((matchNum - 1000) / 100)) + " - " + (matchNum % 100);
+                }
+                else if (matchNum < 3000) {
+                    outString = "SF - " + Math.trunc(((matchNum - 2000) / 100)) + " - " + (matchNum % 100);
+                }
+                else {
+                    outString = "F - " + Math.trunc(((matchNum - 3000) / 100)) + " - " + (matchNum % 100);
+
+                }
+                firstCell.innerHTML = outString;
+            }
+        }
+        function sortRankings(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("finalPredictions");
+            switching = true;
+            //Set the sorting direction to ascending:
+            dir = "desc";
+            /*Make a loop that will continue until
+            no switching has been done:*/
+            while (switching) {
+                //start by saying: no switching is done:
+                switching = false;
+                rows = table.rows;
+                /*Loop through all table rows (except the
+                first, which contains table headers):*/
+                for (i = 1; i < (rows.length - 1); i++) {
+                    //start by saying there should be no switching:
+                    shouldSwitch = false;
+                    /*Get the two elements you want to compare,
+                    one from current row and one from the next:*/
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+
+                    /*check if the two rows should switch place,
+                    based on the direction, asc or desc:*/
+                    if (dir == "asc") {
+                        if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
+                            //if so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (parseFloat(x.innerHTML) < parseFloat(y.innerHTML)) {
+                            //if so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    /*If a switch has been marked, make the switch
+                    and mark that a switch has been done:*/
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    //Each time a switch is done, increase this count by 1:
+                    switchcount++;
+                } else {
+                    /*If no switching has been done AND the direction is "asc",
+                    set the direction to "desc" and run the while loop again.*/
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
         function sortTable(n) {
             var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
             table = document.getElementById("myTable");
@@ -72,13 +191,15 @@
                     one from current row and one from the next:*/
                     x = rows[i].getElementsByTagName("TD")[n];
                     y = rows[i + 1].getElementsByTagName("TD")[n];
-
-                    if (rows[i].getElementsByTagName("TD")[1].innerHTML > rows[i].getElementsByTagName("TD")[3].innerHTML) {
-                        rows[i].getElementsByTagName("TD")[1].style.backgroundColor = "#ff9b9b";
-                        rows[i].getElementsByTagName("TD")[2].style.backgroundColor = "#ff9b9b";
+                    var j =0
+                    if (rows[i].getElementsByTagName("TD")[1].innerHTML > rows[i].getElementsByTagName("TD")[5].innerHTML) {
+                        for (j = 1; j < 5; j++) {
+                            rows[i].getElementsByTagName("TD")[j].style.backgroundColor = "#ff9b9b";
+                        }
                     } else {
-                        rows[i].getElementsByTagName("TD")[3].style.backgroundColor = "#9bc9ff";
-                        rows[i].getElementsByTagName("TD")[4].style.backgroundColor = "#9bc9ff";
+                        for (j = 5; j < 9; j++) {
+                            rows[i].getElementsByTagName("TD")[j].style.backgroundColor = "#9bc9ff";
+                        }
                     }
                     /*check if the two rows should switch place,
                     based on the direction, asc or desc:*/

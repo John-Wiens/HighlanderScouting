@@ -18,7 +18,7 @@ path = "Data/"
 
 #2019code 2019okok
 #event_name = "2019casf" 
-event_name = "2019code"
+event_name = "2019azpx"
 
 if os.path.isfile(path + event_name + ".pickle"):
     print("Found Local Data File for: {}".format(event_name))
@@ -34,17 +34,11 @@ else:
 event_data.save(path + event_name)
 teams = event_data.get_team_list()
 
-print("Event Data Statistics")
-print(event_data.stats)
-
-print("\n\n Event Data Stat Variances")
-print(event_data.stats_var)
 
 print("\n\nEvent Data Schedule Strengths")
 event_data.get_schedule_strength()
 
-print("Predicting Matches")
-proc.predict_matches(event_data)
+
 
 
 @app.route('/')
@@ -102,7 +96,18 @@ def rankings():
 def predictions():
      return render_template(
         'predictions.html',
-        predictions=np.around(event_data.predictions, decimals=2),
+        #predictions=np.around(event_data.predictions, decimals=2),
+        predictions = np.around(proc.flip_array(np.array([
+                                event_data.predictions[:,0],
+                                event_data.predictions[:,1],
+                                event_data.predictions[:,2],
+                                event_data.predictions_rp[:,0],
+                                event_data.predictions_rp[:,1],
+                                event_data.predictions[:,3],
+                                event_data.predictions[:,4],
+                                event_data.predictions_rp[:,2],
+                                event_data.predictions_rp[:,3]])),decimals=2),
+        final_predictions = np.around(event_data.predictions_final,decimals=2),
         title='Predictions',
         year=datetime.now().year,
     )

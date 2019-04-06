@@ -12,47 +12,51 @@ def predict_matches(event_data):
     success = 0
     match_index = 0
     for match in matches:
-        red_average = 0
-        red_variance = 0
-        for team in match["alliances"]["red"]["team_keys"]:
-                team_index = team_list.index(int(team[3:]))
-                red_average +=event_data.stats[team_index][6]
-                red_variance += event_data.stats_var[team_index][6]
-                team_index +=1
-                
-        blue_average = 0
-        blue_variance = 0
-        for team in match["alliances"]["blue"]["team_keys"]:
-                team_index = team_list.index(int(team[3:]))
-                blue_average +=event_data.stats[team_index][6]
-                blue_variance += event_data.stats_var[team_index][6]
-
-        average = red_average - blue_average
-        variance = red_variance + blue_variance
-        prob_blue_wins = round((1.0 + math.erf(-average /(math.sqrt(variance)* math.sqrt(2.0)))) / 2.0,2)
-        if prob_blue_wins > 0.99:
-            prob_blue_wins = 0.99
-        prob_red_wins = 1 - prob_blue_wins
-
-        level = "0"
+        level = 0
         if match["comp_level"] =="qm":
-            level = "0"
+            level = 0
         elif match["comp_level"] =="qf":
-            level = "1"
+            level = 1000
         elif match["comp_level"] =="sf":
-            level = "2"
+            level = 2000
         elif match["comp_level"] =="f":
-            level = "3"
+            level = 3000
+        
+        predictions[match_index][0] = level + int(100 * float( match["set_number"])) + int(float(match["match_number"]))
+        if match["score_breakdown"] is None:
+            red_average = 0
+            red_variance = 0
+            for team in match["alliances"]["red"]["team_keys"]:
+                    team_index = team_list.index(int(team[3:]))
+                    red_average +=event_data.stats[team_index][6]
+                    red_variance += event_data.stats_var[team_index][6]
+                    team_index +=1
+                
+            blue_average = 0
+            blue_variance = 0
+            for team in match["alliances"]["blue"]["team_keys"]:
+                    team_index = team_list.index(int(team[3:]))
+                    blue_average +=event_data.stats[team_index][6]
+                    blue_variance += event_data.stats_var[team_index][6]
 
-        predictions[match_index][0] = float(level+ str(match["set_number"]) +"."+str(match["match_number"]))
-        predictions[match_index][1] = red_average
-        predictions[match_index][2] = prob_red_wins
-        predictions[match_index][3] = blue_average
-        predictions[match_index][4] = prob_blue_wins
+            average = red_average - blue_average
+            variance = red_variance + blue_variance
+            prob_blue_wins = round((1.0 + math.erf(-average /(math.sqrt(variance)* math.sqrt(2.0)))) / 2.0,2)
+            if prob_blue_wins > 0.99:
+                prob_blue_wins = 0.99
+            prob_red_wins = 1 - prob_blue_wins
+            predictions[match_index][1] = red_average
+            predictions[match_index][2] = prob_red_wins
+            predictions[match_index][3] = blue_average
+            predictions[match_index][4] = prob_blue_wins
+        else:
+            red_score = int(float(match["score_breakdown"]["red"]["totalPoints"]))
+            blue_score = int(float(match["score_breakdown"]["blue"]["totalPoints"]))
+            predictions[match_index][1] = red_score
+            predictions[match_index][2] = 1 if red_score >= blue_score else 0
+            predictions[match_index][3] = blue_score
+            predictions[match_index][4] = 1 if red_score <= blue_score else 0
         match_index +=1
-    
-    #predictions.sort(axis=0)
-    #print(predictions)
     return predictions
 
 
@@ -60,24 +64,6 @@ def predict_matches(event_data):
         # set_number
         # comp_level
         # match_number
-        #
-        # Code used to evaluate who one the match TODO move to new function
-        #if match["score_breakdown"] is not None:
-        #    actual_red_score = match["score_breakdown"]["red"]["totalPoints"]
-        #    actual_blue_score = match["score_breakdown"]["blue"]["totalPoints"]
-        #    played_matches +=1
-        #
-        #    average_error += red_average - actual_red_score + blue_average - actual_blue_score
-        #
-        #    correct = False
-        #    if actual_blue_score > actual_red_score:
-        #        if prob_blue_wins > prob_red_wins:
-        #            correct = True
-        #    else:
-        #        if prob_red_wins > prob_blue_wins:
-        #            correct = True
-        #    if correct:
-        #        success +=1
         
 
 
@@ -270,9 +256,6 @@ def generate_win_loss_power(event_data,data):
             for pair_team in match["alliances"]["blue"]["teams"]:
                     schedule[team_list.index(int(pair_team[3:]))] -= delta_power / abs(delta_power)
             
-
-    for row in range(len(team_list)):
-        print (team_list[row] , schedule[row])
 
 def adjust_data_for_schedule(event_data,data):
     scheudle = generate_schedule_power(event_data,data)

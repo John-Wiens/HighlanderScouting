@@ -22,6 +22,8 @@ class Event_2019():
         self.matches = None
 
         self.predictions = None
+        self.predictions_rp = None
+        self.predictions_final = None
 
         self.update()
         self.team_list = self.get_team_list()
@@ -55,9 +57,63 @@ class Event_2019():
         self.rankings, _ = TBA.update_entry("/event/" + self.code + "/rankings",self.rankings,self.last_update_time)
         self.matches, self.last_update_time = TBA.update_entry("/event/" + self.code + "/matches",self.matches,self.last_update_time)
         self.update_team_stats()
+        #print(self.matches[0])
         self.predictions = Processing.predict_matches(self)
-        print(self.matches[0])
-    
+        self.predictions_rp = self.predict_match_rp()
+        print("RP Predictions")
+        print(self.predictions_rp)
+        self.predictions_final = self.predict_final_rankings()
+        print("Final Predictions")
+        print(self.predictions_final)
+
+    def predict_final_rankings(self):
+        #Team Num, Expected RP, Expected Cargo, Expected Hatch, Expected Climb
+        rp_predictions = np.zeros(len(self.team_list))
+        cargo_predictions = np.zeros(len(self.team_list))
+        hatch_predictions = np.zeros(len(self.team_list))
+        climb_predictions = np.zeros(len(self.team_list))
+        matches = self.matches
+        team_list = self.get_team_list()
+        match_index = 0
+        teams_played = 0
+        print(rp_predictions)
+        for match in matches:
+            if match["comp_level"] == 'qm':
+                for team in match["alliances"]["red"]["team_keys"]:
+                    team_index = team_list.index(int(team[3:]))
+                    rp_predictions[team_index] += self.predictions_rp[match_index][0] + self.predictions_rp[match_index][1]
+                    rp_predictions[team_index] += 2 if self.predictions[match_index][1] >= self.predictions[match_index][3] else 0
+                    if match["score_breakdown"] is not None:
+                        teams_played +=1
+                        cargo_predictions[team_index] += match["score_breakdown"]["red"]["cargoPoints"]
+                        hatch_predictions[team_index] += match["score_breakdown"]["red"]["hatchPanelPoints"]
+                        climb_predictions[team_index] += match["score_breakdown"]["red"]["habClimbPoints"]
+
+                for team in match["alliances"]["blue"]["team_keys"]:
+                    team_index = team_list.index(int(team[3:]))
+                    rp_predictions[team_index] += self.predictions_rp[match_index][2] + self.predictions_rp[match_index][3]
+                    rp_predictions[team_index] += 2 if self.predictions[match_index][1] <= self.predictions[match_index][3] else 0
+                    if match["score_breakdown"] is not None:
+                        teams_played +=1
+                        cargo_predictions[team_index] += match["score_breakdown"]["blue"]["cargoPoints"]
+                        hatch_predictions[team_index] += match["score_breakdown"]["blue"]["hatchPanelPoints"]
+                        climb_predictions[team_index] += match["score_breakdown"]["blue"]["habClimbPoints"]
+                      
+                match_index +=1
+        
+        matches_remaining = (match_index*6 - teams_played) / len(self.team_list)
+        average_cargo = np.average(self.stats[:,3])
+        average_hatches = np.average(self.stats[:,2])
+        average_climb = np.average(self.stats[:,4])
+
+        cargo_predictions += (self.stats[:,3] + average_cargo) * matches_remaining
+        hatch_predictions += (self.stats[:,2] + average_hatches) * matches_remaining
+        climb_predictions += (self.stats[:,4] + average_climb) * matches_remaining
+
+        final_predictions = np.array([team_list, rp_predictions, cargo_predictions, hatch_predictions, climb_predictions])
+        return Processing.flip_array(final_predictions)
+
+
 
     #generates match statistics for a given tournament
     def update_team_stats(self):
@@ -78,7 +134,6 @@ class Event_2019():
         
 
         hab, hab_var = self.get_team_hab_stats()
-        print(climb_var,hab_var)
 
         # Populate the power rating graph from the other available statistics
         pr = np.zeros(len(team_list))
@@ -115,33 +170,45 @@ class Event_2019():
         return export_data
 
     def predict_match_rp(self):
-        matches = event_data.matches
-        team_list = event_data.get_team_list()
+        matches = self.matches
+        team_list = self.get_team_list()
         team_rocket_powers = Processing.generate_ols_stat_list(self,"completeRocketRankingPoint",1)
         # Red Climb, Red Rocket, Blue Climb, Blue Rocket
-        rp = np.zeros((len(event_data.matches),4))
-        team_rp = np.zeros((len(event_data.teams),1))
+        rp = np.zeros((len(self.matches),4))
+        match_index = 0
         for match in matches:
-            match_index = int(float(match["match_number"]))-1
-            if match["comp_level"] == 'qm':
-                red_climb_power = 0
-                red_rocket_power = 0
-                for team in match["alliances"]["red"]["team_keys"]:
-                    team_index = team_list.index(int(team[3:]))
-                    red_climb_power += self.stats[team_index][4]
-                    red_rocket_power += team_rocket_powers[team_index]
-                if red_climb_power >=15:
-                    rp[match_index][1] = 1
-                if red_rocket_power >= 1:
-                    rp[match_index][2] = 1
-                
-                blue_climb_power = 0
-                for team in match["alliances"]["blue"]["team_keys"]:
+            if match["comp_level"] == 'qm': 
+                if match["score_breakdown"] is None:
+                    red_climb_power = 0
+                    red_rocket_power = 0
+                    for team in match["alliances"]["red"]["team_keys"]:
                         team_index = team_list.index(int(team[3:]))
-                        blue_average +=event_data.stats[team_index][6]
-                        blue_variance += event_data.stats_var[team_index][6]
+                        red_climb_power += self.stats[team_index][4]
+                        red_rocket_power += team_rocket_powers[team_index]
+                    if red_climb_power >=15:
+                        rp[match_index][0] = 1
+                    if red_rocket_power >= 1:
+                        rp[match_index][1] = 1
 
-        pass
+                
+                    blue_climb_power = 0
+                    blue_rocket_power = 0
+                    for team in match["alliances"]["blue"]["team_keys"]:
+                            team_index = team_list.index(int(team[3:]))
+                            blue_climb_power += self.stats[team_index][4]
+                            blue_rocket_power += team_rocket_powers[team_index]
+                    if blue_climb_power >=15:
+                        rp[match_index][2] = 1
+                    if blue_rocket_power >= 1:
+                        rp[match_index][3] = 1
+                else:
+                    rp[match_index][0] = 1 if match["score_breakdown"]["red"]["habDockingRankingPoint"] else 0
+                    rp[match_index][1] = 1 if match["score_breakdown"]["red"]["completeRocketRankingPoint"] else 0
+                    rp[match_index][2] = 1 if match["score_breakdown"]["blue"]["habDockingRankingPoint"] else 0
+                    rp[match_index][3] = 1 if match["score_breakdown"]["blue"]["completeRocketRankingPoint"] else 0
+            match_index +=1
+
+        return rp
 
     def get_team_hab_stats(self):
         np_hab = np.array(self.get_team_specific_data_arrays( "habLineRobot"))
@@ -209,7 +276,7 @@ class Event_2019():
         
     def get_schedule_strength(self):
         schedule = np.zeros((len(self.team_list),3))
-        print(schedule)
+        #print(schedule)
         for match in self.matches:
             if match["comp_level"] == "qm" and match["score_breakdown"] is not None:
                 for team in match["alliances"]["red"]["team_keys"]:
