@@ -18,7 +18,8 @@ path = "Data/"
 
 #2019code 2019okok
 #event_name = "2019casf" 
-event_name = "2019azpx"
+#event_name = "2019azpx"
+event_name = "2019code"
 
 if os.path.isfile(path + event_name + ".pickle"):
     print("Found Local Data File for: {}".format(event_name))

@@ -81,24 +81,33 @@ class Event_2019():
             if match["comp_level"] == 'qm':
                 for team in match["alliances"]["red"]["team_keys"]:
                     team_index = team_list.index(int(team[3:]))
-                    rp_predictions[team_index] += self.predictions_rp[match_index][0] + self.predictions_rp[match_index][1]
-                    rp_predictions[team_index] += 2 if self.predictions[match_index][1] >= self.predictions[match_index][3] else 0
                     if match["score_breakdown"] is not None:
                         teams_played +=1
                         cargo_predictions[team_index] += match["score_breakdown"]["red"]["cargoPoints"]
                         hatch_predictions[team_index] += match["score_breakdown"]["red"]["hatchPanelPoints"]
                         climb_predictions[team_index] += match["score_breakdown"]["red"]["habClimbPoints"]
+                        rp_predictions[team_index] += match["score_breakdown"]["red"]["habDockingRankingPoint"] 
+                        rp_predictions[team_index] += match["score_breakdown"]["red"]["completeRocketRankingPoint"]
+                        rp_predictions[team_index] += 2 if int(match["score_breakdown"]["red"]["totalPoints"]) > int(match["score_breakdown"]["blue"]["totalPoints"]) else 0
+                        rp_predictions[team_index] += 2 if int(match["score_breakdown"]["red"]["totalPoints"]) == int(match["score_breakdown"]["blue"]["totalPoints"]) else 0
+                    else:
+                        rp_predictions[team_index] += self.predictions_rp[match_index][0] + self.predictions_rp[match_index][1]
+                        rp_predictions[team_index] += 2 if self.predictions[match_index][1] >= self.predictions[match_index][3] else 0
 
                 for team in match["alliances"]["blue"]["team_keys"]:
                     team_index = team_list.index(int(team[3:]))
-                    rp_predictions[team_index] += self.predictions_rp[match_index][2] + self.predictions_rp[match_index][3]
-                    rp_predictions[team_index] += 2 if self.predictions[match_index][1] <= self.predictions[match_index][3] else 0
                     if match["score_breakdown"] is not None:
                         teams_played +=1
                         cargo_predictions[team_index] += match["score_breakdown"]["blue"]["cargoPoints"]
                         hatch_predictions[team_index] += match["score_breakdown"]["blue"]["hatchPanelPoints"]
                         climb_predictions[team_index] += match["score_breakdown"]["blue"]["habClimbPoints"]
-                      
+                        rp_predictions[team_index] += match["score_breakdown"]["blue"]["habDockingRankingPoint"] 
+                        rp_predictions[team_index] += match["score_breakdown"]["blue"]["completeRocketRankingPoint"]
+                        rp_predictions[team_index] += 2 if int(match["score_breakdown"]["red"]["totalPoints"]) < int(match["score_breakdown"]["blue"]["totalPoints"]) else 0
+                        rp_predictions[team_index] += 2 if int(match["score_breakdown"]["red"]["totalPoints"]) == int(match["score_breakdown"]["blue"]["totalPoints"]) else 0
+                    else:
+                        rp_predictions[team_index] += self.predictions_rp[match_index][2] + self.predictions_rp[match_index][3]
+                        rp_predictions[team_index] += 2 if self.predictions[match_index][1] <= self.predictions[match_index][3] else 0
                 match_index +=1
         
         matches_remaining = (match_index*6 - teams_played) / len(self.team_list)

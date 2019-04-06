@@ -140,10 +140,20 @@
                     /*check if the two rows should switch place,
                     based on the direction, asc or desc:*/
                     if (dir == "asc") {
+
                         if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
                             //if so, mark as a switch and break the loop:
                             shouldSwitch = true;
                             break;
+                        }
+                        else if (parseFloat(x.innerHTML) == parseFloat(y.innerHTML)){
+                            x = rows[i].getElementsByTagName("TD")[2];
+                            y = rows[i + 1].getElementsByTagName("TD")[2];
+                            if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
+                                //if so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
                         }
                     } else if (dir == "desc") {
                         if (parseFloat(x.innerHTML) < parseFloat(y.innerHTML)) {
