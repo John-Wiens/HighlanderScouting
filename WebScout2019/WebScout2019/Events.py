@@ -3,8 +3,8 @@ import pickle
 import numpy as np
 import TBA
 import Processing
-
-
+import datetime
+import os
 
 # Events will be completely classified by their TBA event codes which include both a year and an event number
 # Events will primarily contain a Data Array with stats for every team, and will provide Labeled Headers for the Data
@@ -16,6 +16,7 @@ class Event_2019():
         self.event = None
         self.stats  = None # Array of Team Stats [Team, OPR, Panels, Cargo, Climb, Hab Start, PR]
         self.stats_var = None # Array of Team Stat Variances [Team, OPR, Panels, Cargo, Climb, Hab Start, PR]
+        self.previous_stats = None
 
         self.teams = None
         self.rankings = None
@@ -24,6 +25,7 @@ class Event_2019():
         self.predictions = None
         self.predictions_rp = None
         self.predictions_final = None
+        self.schedule_strength = None
 
         self.update()
         self.team_list = self.get_team_list()
@@ -52,7 +54,7 @@ class Event_2019():
 
     def update(self):
         if TBA.check_tba_connection():
-            if(TBA.check_tba_new_data("/event/" + self.code,self.last_update_time)):
+            if(TBA.check_tba_new_data("/event/" + self.code,self.last_update_time)) or True:
                 print("Updating: {}".format(self.code))
                 self.event, _ = TBA.update_entry("/event/" + self.code, self.event, self.last_update_time)
                 self.teams, _ = TBA.update_entry("/event/" + self.code + "/teams",self.teams,self.last_update_time)
@@ -62,15 +64,15 @@ class Event_2019():
                 #print(self.matches[0])
                 self.predictions = Processing.predict_matches(self)
                 self.predictions_rp = self.predict_match_rp()
-                print("RP Predictions")
-                print(self.predictions_rp)
                 self.predictions_final = self.predict_final_rankings()
-                print("Final Predictions")
-                print(self.predictions_final)
+                self.schedule_strength = self.get_schedule_strength()
+
+
             else:
                 print("{} is already Up to Date".format(self.code))
         else:
             print("Unable to Connect to TBA")
+        
 
     def predict_final_rankings(self):
         #Team Num, Expected RP, Expected Cargo, Expected Hatch, Expected Climb
@@ -82,7 +84,6 @@ class Event_2019():
         team_list = self.get_team_list()
         match_index = 0
         teams_played = 0
-        print(rp_predictions)
         for match in matches:
             if match["comp_level"] == 'qm':
                 for team in match["alliances"]["red"]["team_keys"]:
@@ -128,45 +129,62 @@ class Event_2019():
         final_predictions = np.array([team_list, rp_predictions, cargo_predictions, hatch_predictions, climb_predictions])
         return Processing.flip_array(final_predictions)
 
-
+    def get_highest_qual_match_played(self):
+        highest = 0
+        for match in self.matches:
+            if match["score_breakdown"] is not None:
+                num = int(float(match["match_number"]))
+                if num > highest:
+                    highest = num
+        return highest
 
     #generates match statistics for a given tournament
     def update_team_stats(self):
         team_list = self.get_team_list()
+        if self.get_highest_qual_match_played() > 10:
+            # Load Lists of statistics (calculated using linear regression)
+            opr = Processing.generate_ols_stat_list(self,"totalPoints",1)
+            opr_var = Processing.get_stat_variance(self,"totalPoints",opr)
 
-        # Load Lists of statistics (calculated using linear regression)
-        opr = Processing.generate_ols_stat_list(self,"totalPoints",1)
-        opr_var = Processing.get_stat_variance(self,"totalPoints",opr)
+            panels = Processing.generate_ols_stat_list(self,"hatchPanelPoints",1)
+            panel_var = Processing.get_stat_variance(self,"hatchPanelPoints",panels)
 
-        panels = Processing.generate_ols_stat_list(self,"hatchPanelPoints",1)
-        panel_var = Processing.get_stat_variance(self,"hatchPanelPoints",panels)
+            cargo = Processing.generate_ols_stat_list(self,"cargoPoints",1)
+            cargo_var = Processing.get_stat_variance(self,"cargoPoints",cargo) 
 
-        cargo = Processing.generate_ols_stat_list(self,"cargoPoints",1)
-        cargo_var = Processing.get_stat_variance(self,"cargoPoints",cargo) 
-
-        # Load Data On Statistics that are known on a per robot basis
-        climb, climb_var = self.get_team_climb_stats()
+            # Load Data On Statistics that are known on a per robot basis
+            climb, climb_var = self.get_team_climb_stats()
         
 
-        hab, hab_var = self.get_team_hab_stats()
+            hab, hab_var = self.get_team_hab_stats()
 
-        # Populate the power rating graph from the other available statistics
-        pr = np.zeros(len(team_list))
-        export_data = np.array([team_list, opr, panels, cargo,climb,hab, pr])
-        export_data_var = np.array([team_list, opr_var, panel_var, cargo_var, climb_var, hab_var, pr])
-        for row in range(0,len(export_data[0])):
-            value = 0
-            value_var = 0
-            for column in range(2,len(export_data)-1):
-                value += export_data[column][row]
-                value_var += export_data_var[column][row]
-            export_data[-1][row] = value
-            export_data_var[-1][row] = value_var
-        self.stats = Processing.flip_array(export_data)
-        self.stats_var = Processing.flip_array(export_data_var)
-
-
-    #generates export data for a single tournament up to the round supplied
+            # Populate the power rating graph from the other available statistics
+            pr = np.zeros(len(team_list))
+            export_data = np.array([team_list, opr, panels, cargo,climb,hab, pr])
+            export_data_var = np.array([team_list, opr_var, panel_var, cargo_var, climb_var, hab_var, pr])
+            for row in range(0,len(export_data[0])):
+                value = 0
+                value_var = 0
+                for column in range(2,len(export_data)-1):
+                    value += export_data[column][row]
+                    value_var += export_data_var[column][row]
+                export_data[-1][row] = value
+                export_data_var[-1][row] = value_var
+            self.stats = Processing.flip_array(export_data)
+            self.stats_var = Processing.flip_array(export_data_var)
+        else:
+            stats = np.zeros((len(self.team_list),7))
+            stats_var = np.zeros((len(self.team_list),7))
+            i = 0
+            for team in self.team_list:
+                stat, var = self.get_team_opr_history(team, 2019)
+                stats[i] += stat
+                stats_var[i] += var
+                i+=1
+            self.stats = stats
+            self.stats_var = stats_var
+            print(self.stats)
+        #generates export data for a single tournament up to the round supplied
     def export_csv(self):
 
         self.update()
@@ -253,7 +271,6 @@ class Event_2019():
 
             hab_stats[index] = sandstorm_score
             hab_var[index] = var
-            #print(self.team_list[index],hab_score,hab3)
             index +=1
         
         return hab_stats, hab_var
@@ -282,8 +299,6 @@ class Event_2019():
 
             climb_stats[index] = hab_score
             climb_var[index] = var
-            
-            #print(self.team_list[index],hab_score,hab3)
             index +=1
 
           
@@ -291,9 +306,8 @@ class Event_2019():
         
     def get_schedule_strength(self):
         schedule = np.zeros((len(self.team_list),3))
-        #print(schedule)
         for match in self.matches:
-            if match["comp_level"] == "qm" and match["score_breakdown"] is not None:
+            if match["comp_level"] == "qm":
                 for team in match["alliances"]["red"]["team_keys"]:
                     team_index = self.team_list.index(int(team[3:]))    
                     for pair_team in match["alliances"]["red"]["team_keys"]:
@@ -324,7 +338,7 @@ class Event_2019():
                 schedule[row][2] = schedule[row][0] / schedule[row][1]
             else:
                 schedule[row][2] = 1
-            print (self.team_list[row] , schedule[row][0], schedule[row][1], schedule[row][2])
+            #print (self.team_list[row] , schedule[row][0], schedule[row][1], schedule[row][2])
         return schedule
 
 
@@ -353,6 +367,44 @@ class Event_2019():
                     robot_stats[team_index].append( match["score_breakdown"]["blue"][stat+str(robot_number)]) 
                     robot_number +=1
         return robot_stats
+
+    
+    def get_team_opr_history(self,team, year):
+        event_codes = []
+        events, _ =TBA.update_entry("/team/frc{team_num}/events/{year}/simple".format(team_num = team,year = year),event_codes, "")
+        pr = np.array([team,0,0,0,0,0,0])
+        pr_var = np.array([team,0,0,0,0,0,0])
+        most_recent_event = datetime.datetime(year,1,1,0)
+        this_event_date = datetime.datetime.strptime(self.event["start_date"], "%Y-%m-%d")
+        event_name = ""
+        for event in events:
+            if event["event_type"] != "4":
+                today = datetime.datetime.today()
+                compare_date = datetime.datetime.strptime(event["end_date"], "%Y-%m-%d")
+                if this_event_date > compare_date and compare_date > most_recent_event:
+                    most_recent_event = compare_date 
+                    event_name =str(year) + event["event_code"]
+        if event_name != "":
+            path = "Data/"
+            event_data = None
+            if os.path.isfile(path + event_name + ".pickle"):
+                print("Found Local Data File for: {}".format(event_name))
+                event_file = open(path + event_name+".pickle","rb")
+                event_data = pickle.load(event_file)
+                event_data.update()
+                event_file.close()
+            else:
+                print("Querying Data for: {}".format(event_name))
+                print("Loading event_data from TBA")
+                event_data = Event_2019(event_name)
+            index = event_data.get_team_list().index(int(team))
+            increase_by = .3571 * float((this_event_date - most_recent_event).days)
+            pr = event_data.stats[index]
+            event_data.stats[6] += increase_by
+            pr_var = event_data.stats[index]
+            event_data.save(path + event_name)
+        return pr, pr_var
+        
     
     
 

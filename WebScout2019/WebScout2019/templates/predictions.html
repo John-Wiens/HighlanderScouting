@@ -33,6 +33,7 @@
     <br>
     <p><strong></strong></p>
     <h2> Predicted Match Outcomes </h2>
+    <p>Last Updated After Match: {{current_match}}</p>
     <table id="myTable">
         <tr>
             <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->
@@ -63,7 +64,7 @@
     <br>
     <h2> Predicted Outcome of Qualifications </h2>
     <table id="finalPredictions">
-        <tr >
+        <tr>
 
             <th onclick="sortTable(0)">Team Number </th>
             <th onclick="sortTable(1)">Ranking Points</th>
@@ -146,7 +147,7 @@
                             shouldSwitch = true;
                             break;
                         }
-                        else if (parseFloat(x.innerHTML) == parseFloat(y.innerHTML)){
+                        else if (parseFloat(x.innerHTML) == parseFloat(y.innerHTML)) {
                             x = rows[i].getElementsByTagName("TD")[2];
                             y = rows[i + 1].getElementsByTagName("TD")[2];
                             if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
@@ -201,7 +202,7 @@
                     one from current row and one from the next:*/
                     x = rows[i].getElementsByTagName("TD")[n];
                     y = rows[i + 1].getElementsByTagName("TD")[n];
-                    var j =0
+                    var j = 0
                     if (rows[i].getElementsByTagName("TD")[1].innerHTML > rows[i].getElementsByTagName("TD")[5].innerHTML) {
                         for (j = 1; j < 5; j++) {
                             rows[i].getElementsByTagName("TD")[j].style.backgroundColor = "#ff9b9b";

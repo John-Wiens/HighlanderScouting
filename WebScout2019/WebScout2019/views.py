@@ -19,7 +19,8 @@ path = "Data/"
 #2019code 2019okok
 #event_name = "2019casf" 
 #event_name = "2019azpx"
-event_name = "2019code"
+event_name = "2019nyny"
+#event_name = "2019code"
 
 if os.path.isfile(path + event_name + ".pickle"):
     print("Found Local Data File for: {}".format(event_name))
@@ -34,13 +35,6 @@ else:
 
 event_data.save(path + event_name)
 teams = event_data.get_team_list()
-
-
-print("\n\nEvent Data Schedule Strengths")
-event_data.get_schedule_strength()
-
-
-
 
 @app.route('/')
 @app.route('/home')
@@ -59,9 +53,8 @@ def teams():
         print(request.form)
         team = request.form['team']
 
-
-
         index = event_data.get_team_list().index(int(team))
+        print(round(event_data.schedule_strength[index][2],2),round(event_data.predictions_final[index][1],2))
         return render_template(
         'teams.html',
         team_list=event_data.get_team_list(),
@@ -71,11 +64,10 @@ def teams():
         hatches = round(event_data.stats[index][2],2),
         climb = round(event_data.stats[index][4],2),
         pr = round(event_data.stats[index][6],2),
-        hab = round(event_data.stats[index][5],2))
-
-
-        
-
+        hab = round(event_data.stats[index][5],2),
+        sstrength = round(event_data.schedule_strength[index][2],2),
+        pranking = round(event_data.predictions_final[index][1],2)
+        )
     return render_template(
         'teams.html',
         team_list=event_data.get_team_list(),selected_team = 'robot')
@@ -109,6 +101,7 @@ def predictions():
                                 event_data.predictions_rp[:,2],
                                 event_data.predictions_rp[:,3]])),decimals=2),
         final_predictions = np.around(event_data.predictions_final,decimals=2),
+        current_match = event_data.get_highest_qual_match_played(),
         title='Predictions',
         year=datetime.now().year,
     )
