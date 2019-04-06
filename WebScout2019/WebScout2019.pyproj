@@ -14,7 +14,7 @@
     <LaunchProvider>Web launcher</LaunchProvider>
     <WebBrowserUrl>http://localhost</WebBrowserUrl>
     <OutputPath>.</OutputPath>
-    <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
+    <SuppressCollectPythonCloudServiceFiles>false</SuppressCollectPythonCloudServiceFiles>
     <Name>WebScout2019</Name>
     <RootNamespace>WebScout2019</RootNamespace>
   </PropertyGroup>
@@ -27,6 +27,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="WebScout2019\Events.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="WebScout2019\runserver.py" />
     <Compile Include="WebScout2019\Archive_Data.py" />
     <Compile Include="WebScout2019\Data.py">
@@ -42,6 +45,11 @@
     <Folder Include="WebScout2019\Logs\" />
     <Folder Include="WebScout2019\static\" />
     <Folder Include="WebScout2019\static\content\" />
+    <Folder Include="WebScout2019\static\content\jquery-nice-select-1.1.0\" />
+    <Folder Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\" />
+    <Folder Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\css\" />
+    <Folder Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\js\" />
+    <Folder Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\scss\" />
     <Folder Include="WebScout2019\static\fonts\" />
     <Folder Include="WebScout2019\static\pictures\" />
     <Folder Include="WebScout2019\static\pictures\sitepictures\" />
@@ -53,7 +61,26 @@
     <Content Include="requirements.txt" />
     <Content Include="WebScout2019\static\content\bootstrap.css" />
     <Content Include="WebScout2019\static\content\bootstrap.min.css" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\.gitignore" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\bower.json" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\css\nice-select.css" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\css\style.css" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\dropdown.sketch" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\gulpfile.js" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\index.html" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\js\fastclick.js" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\js\jquery.js" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\js\jquery.nice-select.js" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\js\jquery.nice-select.min.js" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\js\prism.js" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\package.json" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\README.md" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\scss\nice-select.scss" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\scss\style.scss" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\scss\_nice-select-prefixed.scss" />
+    <Content Include="WebScout2019\static\content\jquery-nice-select-1.1.0\jquery-nice-select-1.1.0\scss\_prism.scss" />
     <Content Include="WebScout2019\static\content\site.css" />
+    <Content Include="WebScout2019\static\content\dropdown.css" />
     <Content Include="WebScout2019\static\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="WebScout2019\static\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="WebScout2019\static\fonts\glyphicons-halflings-regular.ttf" />
@@ -73,8 +100,10 @@
     <Content Include="WebScout2019\static\scripts\respond.js" />
     <Content Include="WebScout2019\static\scripts\respond.min.js" />
     <Content Include="WebScout2019\static\scripts\_references.js" />
+    <Content Include="WebScout2019\templates\about.html" />
+    <Content Include="WebScout2019\templates\predictions.html" />
     <Content Include="WebScout2019\templates\teams.html" />
-    <Content Include="WebScout2019\templates\events.html" />
+    <Content Include="WebScout2019\templates\rankings.html" />
     <Content Include="WebScout2019\templates\index.html" />
     <Content Include="WebScout2019\templates\layout.html" />
   </ItemGroup>

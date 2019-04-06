@@ -15,25 +15,7 @@ auth_key = "0Ws8VJsYtWRYmN6CQwahhtiM0vP4pl83J23Lpf4AqsdwmoLmRU7DkXYGDPTGUBWk"
 
 class Data():
     def __init__(self):
-        self.last_events_update = None
-        self.events = None
-
-    def get_year_events(self,year):
-        self.events, self.last_events_update = self.update_entry(api_url + "/events/{year}".format(year = year),self.events,self.last_events_update)
-        
-
-    def update_entry(self, request,entry, last_update):
-        r = self.make_tba_request(request,last_update)
-        last_update = r.headers["Last-Modified"]
-        
-        if r.status_code == 200:
-            entry = r.json()
-        return entry, last_update
-
-    def make_tba_request(self, key_string, last_modified):
-        header = {"X-TBA-Auth-Key":auth_key,"If-Modified-Since":last_modified}
-        r = requests.get(key_string, headers=header)  
-        return r
+        pass
 
     def save(self,f_name):
         pickle_out = open("{f}.pickle".format(f=f_name),"wb")
@@ -70,6 +52,7 @@ class Event_Data(Data):
         self.last_teams_update = ""
         self.last_rankings_update = ""
         self.last_matches_update = ""
+        self.export_data = None
         self.update_event_data()
 
         self.team_list = []
@@ -135,6 +118,7 @@ class Event_Data(Data):
         export_data = Processing.flip_array(export_data)
         #export_data = (export_data[np.argsort(export_data[:, 6])])[::-1]
         #print export_data
+        self.stats = export_data
         return export_data
 
 

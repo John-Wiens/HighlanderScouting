@@ -1,5 +1,121 @@
 import numpy as np
 import os
+import math
+
+
+def predict_matches(event_data):
+    matches = event_data.matches
+    team_list = event_data.get_team_list()
+
+    # Match Number, Red Score, Red Prob, Blue Score, Blue Prob
+    predictions = np.zeros((len(event_data.matches),5))
+    success = 0
+    match_index = 0
+    for match in matches:
+        red_average = 0
+        red_variance = 0
+        for team in match["alliances"]["red"]["team_keys"]:
+                team_index = team_list.index(int(team[3:]))
+                red_average +=event_data.stats[team_index][6]
+                red_variance += event_data.stats_var[team_index][6]
+                team_index +=1
+                
+        blue_average = 0
+        blue_variance = 0
+        for team in match["alliances"]["blue"]["team_keys"]:
+                team_index = team_list.index(int(team[3:]))
+                blue_average +=event_data.stats[team_index][6]
+                blue_variance += event_data.stats_var[team_index][6]
+
+        average = red_average - blue_average
+        variance = red_variance + blue_variance
+        prob_blue_wins = round((1.0 + math.erf(-average /(math.sqrt(variance)* math.sqrt(2.0)))) / 2.0,2)
+        if prob_blue_wins > 0.99:
+            prob_blue_wins = 0.99
+        prob_red_wins = 1 - prob_blue_wins
+
+        level = "0"
+        if match["comp_level"] =="qm":
+            level = "0"
+        elif match["comp_level"] =="qf":
+            level = "1"
+        elif match["comp_level"] =="sf":
+            level = "2"
+        elif match["comp_level"] =="f":
+            level = "3"
+
+        predictions[match_index][0] = float(level+ str(match["set_number"]) +"."+str(match["match_number"]))
+        predictions[match_index][1] = red_average
+        predictions[match_index][2] = prob_red_wins
+        predictions[match_index][3] = blue_average
+        predictions[match_index][4] = prob_blue_wins
+        match_index +=1
+    
+    #predictions.sort(axis=0)
+    #print(predictions)
+    return predictions
+
+
+
+        # set_number
+        # comp_level
+        # match_number
+        #
+        # Code used to evaluate who one the match TODO move to new function
+        #if match["score_breakdown"] is not None:
+        #    actual_red_score = match["score_breakdown"]["red"]["totalPoints"]
+        #    actual_blue_score = match["score_breakdown"]["blue"]["totalPoints"]
+        #    played_matches +=1
+        #
+        #    average_error += red_average - actual_red_score + blue_average - actual_blue_score
+        #
+        #    correct = False
+        #    if actual_blue_score > actual_red_score:
+        #        if prob_blue_wins > prob_red_wins:
+        #            correct = True
+        #    else:
+        #        if prob_red_wins > prob_blue_wins:
+        #            correct = True
+        #    if correct:
+        #        success +=1
+        
+
+
+# Creates a N x 1 matrix that lists out the variances for each team for a given statistic
+def get_stat_variance(event_data, stat, means):
+    matches = event_data.matches
+    team_list = event_data.team_list
+    num_matches = event_data.get_num_matches()
+
+    quantity_factor = 1/(num_matches - 1)
+    
+    variances = np.zeros(len(team_list))
+
+    for match in matches:
+        if match["comp_level"] == "qm" and match["score_breakdown"] is not None:
+            #Fill in the Data for the blue alliance
+            actual_score = match["score_breakdown"]["red"][stat]
+            predicted_score = 0
+            for team in match["alliances"]["red"]["team_keys"]:
+                team_index = team_list.index(int(team[3:]))
+                predicted_score += means[team_index]
+
+            for team in match["alliances"]["red"]["team_keys"]:
+                team_index = team_list.index(int(team[3:]))
+                variances[team_index] += ((actual_score - predicted_score)**2) * quantity_factor 
+
+            #Fill in the Data for the Red alliance
+            actual_score = match["score_breakdown"]["blue"][stat]
+            predicted_score = 0
+            for team in match["alliances"]["blue"]["team_keys"]:
+                team_index = team_list.index(int(team[3:]))
+                predicted_score += means[team_index]
+
+            for team in match["alliances"]["blue"]["team_keys"]:
+                team_index = team_list.index(int(team[3:]))
+                variances[team_index] += ((actual_score - predicted_score)**2) * quantity_factor
+
+    return variances
 
 # generates a linear matrix and solution set for the given statistic
 def create_matrix(event_data, stat, weight):

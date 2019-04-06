@@ -9,22 +9,42 @@ import os
 import pickle
 import urllib.request
 import re
-import Data
+import Events
+import numpy as np
+import Processing as proc
 
 
 path = "Data/"
-event_name = "2019okok" #2019code
+
+#2019code 2019okok
+#event_name = "2019casf" 
+event_name = "2019code"
+
 if os.path.isfile(path + event_name + ".pickle"):
+    print("Found Local Data File for: {}".format(event_name))
     event_file = open(path + event_name+".pickle","rb")
     event_data = pickle.load(event_file)
+    event_data.update()
     event_file.close()
 else:
+    print("Querying Data for: {}".format(event_name))
     print("Loading event_data from TBA")
-    event_data = Data.Event_Data(event_name)
+    event_data = Events.Event_2019(event_name)
 
-event_data.generate_export_data()
+event_data.save(path + event_name)
 teams = event_data.get_team_list()
 
+print("Event Data Statistics")
+print(event_data.stats)
+
+print("\n\n Event Data Stat Variances")
+print(event_data.stats_var)
+
+print("\n\nEvent Data Schedule Strengths")
+event_data.get_schedule_strength()
+
+print("Predicting Matches")
+proc.predict_matches(event_data)
 
 
 @app.route('/')
@@ -35,7 +55,6 @@ def home():
         'index.html',
         title='Home Page',
         year=datetime.now().year,
-        option_list=['a','b','c']
     )
 
 @app.route('/teams',methods = ['POST', 'GET'])
@@ -44,24 +63,20 @@ def teams():
     if request.method == 'POST':
         print(request.form)
         team = request.form['team']
-        
+
+
+
         index = event_data.get_team_list().index(int(team))
-        #picture_path = "WebScout2019/static/pictures/teampictures"
-        #if not(os.path.isfile("{path}/{team}.jpg".format(path=picture_path,team=team))):
-        #    response = urllib.request.urlopen("https://www.thebluealliance.com/team/{team}".format(team=team))
-        #    output = response.read()
-        #    print(output)
-        #    urllib.request.urlretrieve("https://i.imgur.com/IiNmPeHh.jpg", "{path}/{team}.jpg".format(path=picture_path,team=team))
         return render_template(
         'teams.html',
         team_list=event_data.get_team_list(),
         selected_team = request.form['team'],
-        opr = round(event_data.team_data[index].OPR,2),
-        cargo = round(event_data.team_data[index].cargo,2),
-        hatches = round(event_data.team_data[index].hatches,2),
-        climb = round(event_data.team_data[index].climb,2),
-        pr = round(event_data.team_data[index].pr,2),
-        hab = round(event_data.team_data[index].hab,2))
+        opr = round(event_data.stats[index][1],2),
+        cargo = round(event_data.stats[index][3],2),
+        hatches = round(event_data.stats[index][2],2),
+        climb = round(event_data.stats[index][4],2),
+        pr = round(event_data.stats[index][6],2),
+        hab = round(event_data.stats[index][5],2))
 
 
         
@@ -70,13 +85,35 @@ def teams():
         'teams.html',
         team_list=event_data.get_team_list(),selected_team = 'robot')
 
-@app.route('/events')
-def events():
+@app.route('/Rankings')
+def rankings():
     """Renders the about page."""
     return render_template(
-        'events.html',
+        'rankings.html',
+        stats=np.around(event_data.stats, decimals=2),
         title='Events',
         year=datetime.now().year,
         message='Your application description page.'
     )
 
+
+
+@app.route('/Predictions')
+def predictions():
+     return render_template(
+        'predictions.html',
+        predictions=np.around(event_data.predictions, decimals=2),
+        title='Predictions',
+        year=datetime.now().year,
+    )
+
+
+
+
+@app.route('/about')
+def about():
+     return render_template(
+        'about.html',
+        title='About',
+        year=datetime.now().year,
+    )

@@ -1,0 +1,360 @@
+([('runserver.exe',
+   'C:\\Users\\John\\OneDrive - Neaera Consulting '
+   'Group\\Projects\\WebScout2019\\WebScout2019\\WebScout2019\\build\\runserver\\runserver.exe',
+   'EXECUTABLE'),
+  ('runserver.exe.manifest',
+   'C:\\Users\\John\\OneDrive - Neaera Consulting '
+   'Group\\Projects\\WebScout2019\\WebScout2019\\WebScout2019\\build\\runserver\\runserver.exe.manifest',
+   'BINARY'),
+  ('python36.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\python36.dll',
+   'BINARY'),
+  ('VCRUNTIME140.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\VCRUNTIME140.dll',
+   'BINARY'),
+  ('libmvndst.ESZZP47EV6RKCFYTPDCSXD6LWVEBJFUI.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libmvndst.ESZZP47EV6RKCFYTPDCSXD6LWVEBJFUI.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('lib_blas_su.TMFDJ7UO2L7O7RMUOM3UDK4X76KGYFRS.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\lib_blas_su.TMFDJ7UO2L7O7RMUOM3UDK4X76KGYFRS.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('pywintypes36.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\pywin32_system32\\pywintypes36.dll',
+   'BINARY'),
+  ('libdcsrch.I2AOPDCXAPDRFNPWY55H5UE7XZSU5CVN.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libdcsrch.I2AOPDCXAPDRFNPWY55H5UE7XZSU5CVN.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libdet.IC2HHIK52SHR7RQW7UPBR6TYEIK56RMH.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libdet.IC2HHIK52SHR7RQW7UPBR6TYEIK56RMH.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libgetbreak.MDRURXIVIY5FCC2A6QXJMGYR3LLKRHJ7.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libgetbreak.MDRURXIVIY5FCC2A6QXJMGYR3LLKRHJ7.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libdcosqb.YMN7XEXYADIEZSKAGEVNR4E3MD7AXDG2.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libdcosqb.YMN7XEXYADIEZSKAGEVNR4E3MD7AXDG2.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('msvcp140.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\msvcp140.dll',
+   'BINARY'),
+  ('libslsqp_op.LIFGE6AEK5GZMIV4YAH6Q4UEDG4INU5S.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libslsqp_op.LIFGE6AEK5GZMIV4YAH6Q4UEDG4INU5S.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libdcosqb.BFJ36UD5XZWZE5UMOTP5UDYKAJ3LWZ6R.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libdcosqb.BFJ36UD5XZWZE5UMOTP5UDYKAJ3LWZ6R.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libansari.R6EA3HQP5KZ6TAXU4Y4ZVTRPT7UVA53Z.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libansari.R6EA3HQP5KZ6TAXU4Y4ZVTRPT7UVA53Z.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libdqag.3KNJWDZASPU2SCVPO36DFSP4ILOKK2HU.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libdqag.3KNJWDZASPU2SCVPO36DFSP4ILOKK2HU.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('lib_arpack-.24BYHFAJJTC7WHQI2CLV4HV7LX3HH7VJ.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\lib_arpack-.24BYHFAJJTC7WHQI2CLV4HV7LX3HH7VJ.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libdfitpack.KTCF3EOE66VRDKN45KBQA4VBAIS552IF.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libdfitpack.KTCF3EOE66VRDKN45KBQA4VBAIS552IF.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libdgamln.ODOGIQAPTMIO42E7CFQ4X5DDL2JAGD56.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libdgamln.ODOGIQAPTMIO42E7CFQ4X5DDL2JAGD56.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libchkder.G7WSOGIYYQO3UWFVEZ3PPXCXR53ADVPA.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libchkder.G7WSOGIYYQO3UWFVEZ3PPXCXR53ADVPA.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libdop853.6TJTQZW3I3Q3QIDQHEOBEZKJ3NYRXI4B.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libdop853.6TJTQZW3I3Q3QIDQHEOBEZKJ3NYRXI4B.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libvode.CC4POJAWVJQT3FXMVGSMKWY2PVCOYDY7.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libvode.CC4POJAWVJQT3FXMVGSMKWY2PVCOYDY7.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libnnls.IXEEHJUCGHJL42YZEM6UIEMROJWXHMLJ.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libnnls.IXEEHJUCGHJL42YZEM6UIEMROJWXHMLJ.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('liblbfgsb.ALKS55DOX34NH3VNPSWAXOM3EI6TOJSG.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\liblbfgsb.ALKS55DOX34NH3VNPSWAXOM3EI6TOJSG.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libbispeu.5N2XSD7URZS4WTOSLTOG4DDMA4HGB46U.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libbispeu.5N2XSD7URZS4WTOSLTOG4DDMA4HGB46U.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libd_odr.ZHLP44QLHCUHCS4IGU4QYRMZB6FUGVEI.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libd_odr.ZHLP44QLHCUHCS4IGU4QYRMZB6FUGVEI.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('lib_test_fo.JF5HTWMUPBXWGAYEBVEJU3OZAHTSVKCT.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\lib_test_fo.JF5HTWMUPBXWGAYEBVEJU3OZAHTSVKCT.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libwrap_dum.XZSSGJ656VL456KNXK5IVV3FKXDMMUHG.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libwrap_dum.XZSSGJ656VL456KNXK5IVV3FKXDMMUHG.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('pythoncom36.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\pywin32_system32\\pythoncom36.dll',
+   'BINARY'),
+  ('libopenblas.CSRRD7HKRKC3T3YXA7VY7TAZGLSWDKW6.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libopenblas.CSRRD7HKRKC3T3YXA7VY7TAZGLSWDKW6.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libbanded5x.Z7PWGBWF3UBW4GC5M2WDMOFBQJ56BB24.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libbanded5x.Z7PWGBWF3UBW4GC5M2WDMOFBQJ56BB24.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libwrap_dum.KJ3QN2CGI6FQZI3PN7OLTV7MTK7UVZXV.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libwrap_dum.KJ3QN2CGI6FQZI3PN7OLTV7MTK7UVZXV.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libspecfun.BHLTWMBI4EYWDACZN4DQUESSDJRJNGEL.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libspecfun.BHLTWMBI4EYWDACZN4DQUESSDJRJNGEL.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libdfft_sub.WTWWFUS4PZICKULHYCTZKVQAGF6BUPH2.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libdfft_sub.WTWWFUS4PZICKULHYCTZKVQAGF6BUPH2.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libcobyla2.JEGTSUUFJ7DFXWZN5PAYZTTLBDATC4WD.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libcobyla2.JEGTSUUFJ7DFXWZN5PAYZTTLBDATC4WD.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('libblkdta00.JDO5P55XPCUJQG76N2QCY2KHWZZVDMKJ.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\extra-dll\\libblkdta00.JDO5P55XPCUJQG76N2QCY2KHWZZVDMKJ.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('_decimal',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\DLLs\\_decimal.pyd',
+   'EXTENSION'),
+  ('_ctypes',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\DLLs\\_ctypes.pyd',
+   'EXTENSION'),
+  ('_multiprocessing',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\DLLs\\_multiprocessing.pyd',
+   'EXTENSION'),
+  ('win32trace',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\win32\\win32trace.pyd',
+   'EXTENSION'),
+  ('win32ui',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\Pythonwin\\win32ui.pyd',
+   'EXTENSION'),
+  ('_win32sysloader',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\win32\\_win32sysloader.pyd',
+   'EXTENSION'),
+  ('win32api',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\win32\\win32api.pyd',
+   'EXTENSION'),
+  ('win32wnet',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\win32\\win32wnet.pyd',
+   'EXTENSION'),
+  ('win32com.shell.shell',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\win32comext\\shell\\shell.pyd',
+   'EXTENSION'),
+  ('_ssl',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\DLLs\\_ssl.pyd',
+   'EXTENSION'),
+  ('pyexpat',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\DLLs\\pyexpat.pyd',
+   'EXTENSION'),
+  ('_hashlib',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\DLLs\\_hashlib.pyd',
+   'EXTENSION'),
+  ('_lzma',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\DLLs\\_lzma.pyd',
+   'EXTENSION'),
+  ('_socket',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\DLLs\\_socket.pyd',
+   'EXTENSION'),
+  ('_bz2',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\DLLs\\_bz2.pyd',
+   'EXTENSION'),
+  ('unicodedata',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\DLLs\\unicodedata.pyd',
+   'EXTENSION'),
+  ('select',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\DLLs\\select.pyd',
+   'EXTENSION'),
+  ('_distutils_findvs',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\DLLs\\_distutils_findvs.pyd',
+   'EXTENSION'),
+  ('scipy._lib._fpumode',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\_lib\\_fpumode.cp36-win_amd64.pyd',
+   'EXTENSION'),
+  ('scipy._lib._ccallback_c',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\_lib\\_ccallback_c.cp36-win_amd64.pyd',
+   'EXTENSION'),
+  ('scipy._lib.messagestream',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\scipy\\_lib\\messagestream.cp36-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy.core._multiarray_umath',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\numpy\\core\\_multiarray_umath.cp36-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy.core._multiarray_tests',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\numpy\\core\\_multiarray_tests.cp36-win_amd64.pyd',
+   'EXTENSION'),
+  ('win32pdh',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\win32\\win32pdh.pyd',
+   'EXTENSION'),
+  ('numpy.random.mtrand',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\numpy\\random\\mtrand.cp36-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy.fft.fftpack_lite',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\numpy\\fft\\fftpack_lite.cp36-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy.linalg._umath_linalg',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\numpy\\linalg\\_umath_linalg.cp36-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy.linalg.lapack_lite',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\numpy\\linalg\\lapack_lite.cp36-win_amd64.pyd',
+   'EXTENSION'),
+  ('_asyncio',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\DLLs\\_asyncio.pyd',
+   'EXTENSION'),
+  ('_overlapped',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\DLLs\\_overlapped.pyd',
+   'EXTENSION'),
+  ('markupsafe._speedups',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\markupsafe\\_speedups.cp36-win_amd64.pyd',
+   'EXTENSION'),
+  ('mfc140u.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\Pythonwin\\mfc140u.dll',
+   'BINARY'),
+  ('libopenblas.IPBC74C7KURV7CB2PKT5Z5FNR3SIBV4J.gfortran-win_amd64.dll',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\site-packages\\numpy\\.libs\\libopenblas.ipbc74c7kurv7cb2pkt5z5fnr3sibv4j.gfortran-win_amd64.dll',
+   'BINARY'),
+  ('base_library.zip',
+   'C:\\Users\\John\\OneDrive - Neaera Consulting '
+   'Group\\Projects\\WebScout2019\\WebScout2019\\WebScout2019\\build\\runserver\\base_library.zip',
+   'DATA'),
+  ('lib2to3\\PatternGrammar3.6.5.candidate.1.pickle',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\PatternGrammar3.6.5.candidate.1.pickle',
+   'DATA'),
+  ('Include\\pyconfig.h',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\Include\\pyconfig.h',
+   'DATA'),
+  ('lib2to3\\PatternGrammar.txt',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\PatternGrammar.txt',
+   'DATA'),
+  ('lib2to3\\Grammar3.6.3.candidate.1.pickle',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\Grammar3.6.3.candidate.1.pickle',
+   'DATA'),
+  ('lib2to3\\Grammar3.6.5.final.0.pickle',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\Grammar3.6.5.final.0.pickle',
+   'DATA'),
+  ('lib2to3\\Grammar3.6.2.final.0.pickle',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\Grammar3.6.2.final.0.pickle',
+   'DATA'),
+  ('lib2to3\\Grammar3.6.4.final.0.pickle',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\Grammar3.6.4.final.0.pickle',
+   'DATA'),
+  ('lib2to3\\tests\\data\\README',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\tests\\data\\README',
+   'DATA'),
+  ('lib2to3\\PatternGrammar3.6.2.candidate.2.pickle',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\PatternGrammar3.6.2.candidate.2.pickle',
+   'DATA'),
+  ('lib2to3\\PatternGrammar3.6.4.candidate.1.pickle',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\PatternGrammar3.6.4.candidate.1.pickle',
+   'DATA'),
+  ('lib2to3\\Grammar3.6.2.candidate.2.pickle',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\Grammar3.6.2.candidate.2.pickle',
+   'DATA'),
+  ('lib2to3\\PatternGrammar3.6.3.final.0.pickle',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\PatternGrammar3.6.3.final.0.pickle',
+   'DATA'),
+  ('lib2to3\\PatternGrammar3.6.5.final.0.pickle',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\PatternGrammar3.6.5.final.0.pickle',
+   'DATA'),
+  ('lib2to3\\Grammar3.6.5.candidate.1.pickle',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\Grammar3.6.5.candidate.1.pickle',
+   'DATA'),
+  ('lib2to3\\PatternGrammar3.6.4.final.0.pickle',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\PatternGrammar3.6.4.final.0.pickle',
+   'DATA'),
+  ('lib2to3\\Grammar3.6.3.final.0.pickle',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\Grammar3.6.3.final.0.pickle',
+   'DATA'),
+  ('lib2to3\\Grammar.txt',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\Grammar.txt',
+   'DATA'),
+  ('lib2to3\\Grammar3.6.4.candidate.1.pickle',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\Grammar3.6.4.candidate.1.pickle',
+   'DATA'),
+  ('lib2to3\\PatternGrammar3.6.2.final.0.pickle',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\PatternGrammar3.6.2.final.0.pickle',
+   'DATA'),
+  ('lib2to3\\PatternGrammar3.6.3.candidate.1.pickle',
+   'c:\\program files (x86)\\microsoft visual '
+   'studio\\shared\\python36_64\\lib\\lib2to3\\PatternGrammar3.6.3.candidate.1.pickle',
+   'DATA')],)

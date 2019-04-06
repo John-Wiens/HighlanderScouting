@@ -6,8 +6,35 @@
     <title>{{ title }} - My Flask Application</title>
     <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
+    <!--<link rel="stylesheet" type="text/css" href="/static/content/dropdown.css">-->
     <script src="/static/scripts/modernizr-2.6.2.js"></script>
+
+    <style>
+    .select-style {
+        border: 1px solid #ccc;
+        width: 120px;
+        border-radius: 3px;
+        overflow: hidden;
+        /*background: #fafafa url("img/icon-select.png") no-repeat 90% 50%;*/
+    }
+
+    .select-style select {
+        padding: 5px 8px;
+        width: 130%;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        background-image: none;
+        -webkit-appearance: none;
+    }
+
+    .select-style select:focus {
+        outline: none;
+    }
+    </style>
+
 </head>
+
 
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -22,9 +49,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('home') }}">Home</a></li>l
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('rankings') }}">Rankings</a></li>
                     <li><a href="{{ url_for('teams') }}">Teams</a></li>
-                    <li><a href="{{ url_for('events') }}">Events</a></li>
+                    <li><a href="{{ url_for('predictions') }}">Predictions</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
                 </ul>
             </div>
         </div>
@@ -34,7 +63,7 @@
         {% block content %}{% endblock %}
         <hr />
         <footer>
-            <p>&copy; {{ year }} - My Flask Application</p>
+            <p>&copy; {{ year }} - John Wiens</p>
         </footer>
     </div>
 
