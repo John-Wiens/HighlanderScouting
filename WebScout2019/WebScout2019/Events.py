@@ -54,7 +54,7 @@ class Event_2019():
 
     def update(self):
         if TBA.check_tba_connection():
-            if(TBA.check_tba_new_data("/event/" + self.code,self.last_update_time)) or True:
+            if(TBA.check_tba_new_data("/event/" + self.code,self.last_update_time)):
                 print("Updating: {}".format(self.code))
                 self.event, _ = TBA.update_entry("/event/" + self.code, self.event, self.last_update_time)
                 self.teams, _ = TBA.update_entry("/event/" + self.code + "/teams",self.teams,self.last_update_time)
@@ -117,7 +117,7 @@ class Event_2019():
                         rp_predictions[team_index] += 2 if self.predictions[match_index][1] <= self.predictions[match_index][3] else 0
                 match_index +=1
         
-        matches_remaining = (match_index*6 - teams_played) / len(self.team_list)
+        matches_remaining = match_index - self.get_highest_qual_match_played()
         average_cargo = np.average(self.stats[:,3])
         average_hatches = np.average(self.stats[:,2])
         average_climb = np.average(self.stats[:,4])

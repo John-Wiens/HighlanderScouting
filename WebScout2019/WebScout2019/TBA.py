@@ -10,8 +10,11 @@ auth_key = "0Ws8VJsYtWRYmN6CQwahhtiM0vP4pl83J23Lpf4AqsdwmoLmRU7DkXYGDPTGUBWk"
 
 # Returns a list of Event Keys for a given year
 def get_year_events(year):
-    r = make_tba_request(api_url + "/events/{year}".format(year = year),"")
-    return r.json()
+    r = make_tba_request("/events/{year}".format(year = year),"")
+    events = []
+    for row in r.json():
+        events.append(str(row["short_name"]) +" - "+str(year)+str(row["first_event_code"]).lower())
+    return events
 
 #Requests an update on an entry from TBA, returns the updated entry. If no update occurs returns the original entry.
 def update_entry(request,entry, last_update):

@@ -73,7 +73,7 @@
 
     <h2> Currently Selected Team: {{ selected_team }}</h2>
     <div class="picture_div">
-        <img class="north" id="robotPic" src="/static/pictures/teampictures/{{selected_team}}.jpg" alt="No Picture Available" style="width:640px;height:480px;">
+        <img class="north" id="robotPic" src="/static/pictures/teampictures/{{selected_team}}.jpg" alt="https://www.thebluealliance.com/team/{{ selected_team }}" style="width:640px;height:480px;">
     </div>
     <input type="button" value="Rotate Image" onclick="rotateImage()" />
     <h4> OPR:                      {{ opr }}</h4>
@@ -87,9 +87,6 @@
 
 
 </body>
-
-<script src="/static/content/jquery-nice-select-1.1.0/jquery-nice-select-1.1.0/js/jquery.js"></script>
-<script src="/static/content/jquery-nice-select-1.1.0/jquery-nice-select-1.1.0/js/jquery.nice-select.js"></script>
 <script>
     function switchTeam() {
         var team = document.getElementById("team_select").value;
