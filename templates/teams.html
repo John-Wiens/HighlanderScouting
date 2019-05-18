@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<!--<link rel="stylesheet" type="text/css" href="/static/content/dropdown.css">-->
+<style>
+    .select-style {
+        border: 1px solid #ccc;
+        width: 120px;
+        border-radius: 3px;
+        overflow: hidden;
+        /*background: #fafafa url("img/icon-select.png") no-repeat 90% 50%;*/
+    }
+
+    .select-style select {
+        padding: 5px 8px;
+        width: 130%;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        background-image: none;
+        -webkit-appearance: none;
+    }
+
+    .select-style select:focus {
+        outline: none;
+    }
+
+    .north {
+        transform: rotate(0deg);
+        -ms-transform: rotate(0deg); /* IE 9 */
+        -webkit-transform: rotate(0deg); /* Safari and Chrome */
+    }
+
+    .west {
+        transform: rotate(90deg);
+        -ms-transform: rotate(90deg); /* IE 9 */
+        -webkit-transform: rotate(90deg); /* Safari and Chrome */
+    }
+
+    .south {
+        transform: rotate(180deg);
+        -ms-transform: rotate(180deg); /* IE 9 */
+        -webkit-transform: rotate(180deg); /* Safari and Chrome */
+    }
+
+    .east {
+        transform: rotate(270deg);
+        -ms-transform: rotate(270deg); /* IE 9 */
+        -webkit-transform: rotate(270deg); /* Safari and Chrome */
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .picture_div {
+        height: 480px;
+        width: 640px;
+    }
+</style>
+<body>
+    <p></p>
+    <form method="POST">
+        <select id="team_select" name="team" onchange="this.form.submit()" class="select-style">
+            {% for o in team_list %}
+            <option value="{{ o }}" SELECTED>{{ o }}</option>
+            {% endfor %}
+            <option selected="selected">{{ selected_team }}</option>
+        </select>
+    </form>
+
+    <h2> Currently Selected Team: {{ selected_team }}</h2>
+    <div class="picture_div">
+        <img class="north" id="robotPic" src="/static/pictures/teampictures/{{selected_team}}.jpg" alt="https://www.thebluealliance.com/team/{{ selected_team }}" style="width:640px;height:480px;">
+    </div>
+    <input type="button" value="Rotate Image" onclick="rotateImage()" />
+    <h4> OPR:                      {{ opr }}</h4>
+    <h4> Hab:                      {{ hab }}</h4>
+    <h4> Hatches:                  {{ hatches }}</h4>
+    <h4> Cargo:                    {{ cargo }}</h4>
+    <h4> Climb:                    {{ climb }}</h4>
+    <h4> Power Rating:             {{ pr }}</h4>
+    <h4> Schedule Strength:        {{ sstrength}}</h4>
+    <h4> Predicted Ranking Points: {{ pranking }}</h4>
+
+
+</body>
+<script>
+    function switchTeam() {
+        var team = document.getElementById("team_select").value;
+    }
+
+    function rotateImage() {
+        var img = document.getElementById('robotPic');
+        if (img.classList.contains('north')) {
+            img.classList.add('west')
+            img.classList.remove('north')
+        } else if (img.classList.contains('west')) {
+            img.classList.add('south')
+            img.classList.remove('west')
+        } else if (img.classList.contains('south')) {
+            img.classList.add('east')
+            img.classList.remove('south')
+        } else if (img.classList.contains('east')) {
+            img.classList.add('north')
+            img.classList.remove('east')
+        }
+    }
+
+</script>
+
+{% endblock %}
+
+

@@ -1,0 +1,32 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<h1> Please Select an Event</h1>
+<h2>
+    {% for o in event_list %}
+    <div class="col-md-4">
+        <p><a onClick="navigate('{{ o }}')" class="btn btn-default">{{ o }}</a></p>
+    </div>
+    {% endfor %}
+</h2>
+
+<script>
+    function navigate(event) {
+        var components = event.split('-')
+        var event_code = components[components.length - 1]
+
+        var url = window.location.href;
+        components = url.split("/")
+        var destination = components[components.length - 1]
+        var new_url = ""
+        for (i = 0; i < components.length - 1; i++) {
+           
+            new_url += components[i] + "/";
+        }
+        new_url += "2019/" +event_code + "/" + destination;
+        new_url = new_url.replace(/\s/g, '');
+        window.location.href = new_url;
+    }
+</script>
+
+{% endblock %}

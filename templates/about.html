@@ -1,0 +1,26 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<h2>
+    About this Site
+</h2>
+<p>
+    This site was developed by John Wiens, between the hours of 3 and 4 am, on random airplanes, and while he really should have been doing homework. As such this site is provided as is, and you connect to this site at your own risk. Thanks also go out to the fantastic team of Polarbears that helped design the graphics, and test the website. 
+</p>
+
+<h2>
+    About the Highlanders Scouting Application
+</h2>
+<p>
+    The Highlanders Scouting Application was written in Python 3 using python Flask. Flask is a microframework for python designed for hosting and running python based websites. The Data results you are looking at such as OPR, Cargo, and Hatches are solved for using OLS (Ordinary Least Squares). Hab and Climb data are provided directly from the Blue alliance. Since the 2019 FRC game has extremely linear scoring, team performance is modeled by a first order linear regression. The Variance of each team for the scoring metrics is also calculated in order to provide a measure of team consistency. This is primarily used in calculating the probability of a team winning a given match. Team performance is based upon not only the data in the current event, but also the teams previous events if available. 
+</p>
+
+<h2>
+    A word on AWS:
+</h2>
+<p>
+    This app was deployed using AWS Elastic Beanstalk. The code for the system is therefore hosted on aws EC2 instance. The domain name for this site and DNS routing is being performed using AWS Route 53. All of the data that is being loaded onto this site is hosted on AWS S3 Bucket. This bucket is being periodically updated from an AWS Lambda expression, which is the chillest way for Polar Bears to run code. The Lambda expression are queued using an AWS CloudWatch event, and logging is being performed using CloudWatch Logs. In other words, the heavy lifting of this application is all done without managed servers. Like the Polar bears behind the scenes of this application, the lamda functions live their lives 2:30 second at a time. 
+</p>
+
+
+{% endblock %}
